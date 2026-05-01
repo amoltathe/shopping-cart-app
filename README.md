@@ -5,8 +5,8 @@ A modular, production-style Shopping Cart system built in Java 21, demonstrating
 ✔ Modern concurrency (Virtual Threads)
 ✔ Testable design with dependency injection
 
-
-📌 Navigation
+<pre>
+# Navigation
 📌 Overview
 🏗️ Architecture
 🔌 Core Components
@@ -15,7 +15,7 @@ A modular, production-style Shopping Cart system built in Java 21, demonstrating
 🧪 Testing
 🔥 Key Highlights
 📈 Future Enhancements
-
+</pre>
 <pre>
 📌 Overview
 A modular Shopping Cart system built using Java 21 that demonstrates:
