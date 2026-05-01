@@ -7,14 +7,14 @@ A modular, production-style Shopping Cart system built in Java 21, demonstrating
 
 <pre>
 # Navigation
-📌 Overview
-🏗️ Architecture
-🔌 Core Components
-📂 Project Structure
-🚀 How to Run
-🧪 Testing
-🔥 Key Highlights
-📈 Future Enhancements
+1. Overview
+2. Architecture
+3. Core Components
+4. Project Structure
+5. How to Run
+6. Testing
+7. Key Highlights
+8. Future Enhancements
 </pre>
 <pre>
 📌 Overview
