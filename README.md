@@ -35,7 +35,7 @@ Abstracts data fetching (HTTP / File / Mock).
 
 🌐 HttpProductDataSource
 
-Uses Java HttpClient (no deprecated APIs).
+Uses Java HttpClient.
 
 📦 ProductRepository
 
