@@ -5,8 +5,8 @@ A modular, production-style Shopping Cart system built in Java 21, demonstrating
 ✔ Modern concurrency (Virtual Threads)
 ✔ Testable design with dependency injection
 
-<pre>
 # Navigation
+<pre>
 1. Overview
 2. Architecture
 3. Core Components
@@ -16,18 +16,19 @@ A modular, production-style Shopping Cart system built in Java 21, demonstrating
 7. Key Highlights
 8. Future Enhancements
 </pre>
+# Overview
 <pre>
-📌 Overview
 A modular Shopping Cart system built using Java 21 that demonstrates:
 Clean Architecture
 SOLID principles
 Virtual Threads
 Extensible service-based design
 </pre>
-🏗️ Architecture
+# Architecture
 <pre> ProductLoader ↓ ProductDataSource ↓ ProductParser ↓ ProductRepository ↓ ProductService ↓ PriceServiceImpl ↓ ShoppingCartProcessor ↓ DefaultTaxService ↓ Bill Generator </pre>
+
+# Core Components
 <pre>
-🔌 Core Components
 📦 ProductDataSource
 
 Abstracts data fetching (HTTP / File / Mock).
@@ -56,6 +57,8 @@ Strategy-based tax calculation.
 </pre>
 
 Core engine for cart + billing logic.
+
+ # Project Structure
 <pre>
 com.at.shopping.cart
 │
@@ -88,25 +91,28 @@ com.at.shopping.cart
 └── util
     └── RetryExecutor.java
 </pre> 
-🚀 How to Run
+# How to Run
 mvn clean install
 java -cp target/app.jar com.at.shopping.cart.Main
+
+# Testing
 <pre>
-🧪 Testing
+
 JUnit 5
 Mockito
 Mocked HTTP layer
 Service-level unit tests
-
-🔥 Key Highlights
+</pre>
+# Key Highlights
 ⚡ Virtual Threads for parallel loading
 🧠 Clean layered architecture
 🔌 Fully decoupled services
 🧾 Structured billing system
 🧪 Highly testable design
-</pre>
+
+# Future Enhancements
 <pre>
-📈 Future Enhancements
+
 💸 Discount engine
 🌐 Spring Boot REST API
 🧠 Redis caching layer
