@@ -6,207 +6,107 @@ A modular, production-style Shopping Cart system built in Java 21, demonstrating
 ✔ Modern concurrency (Virtual Threads)
 ✔ Testable design with dependency injection
 
+
+📌 Navigation
 📌 Overview
-<details> <summary>Click to expand</summary>
+🏗️ Architecture
+🔌 Core Components
+📂 Project Structure
+🚀 How to Run
+🧪 Testing
+🔥 Key Highlights
+📈 Future Enhancements
+📌 Overview
 
-This system simulates a real-world e-commerce shopping cart:
+A modular Shopping Cart system built using Java 21 that demonstrates:
 
-📦 Loads product data from remote JSON sources
-🧠 Parses and stores products in an immutable repository
-🛒 Supports cart operations (add items, quantity aggregation)
-💰 Calculates subtotal, tax, and total
-🧾 Generates detailed bill breakdown
-⚡ Uses Java 21 features like Virtual Threads + HttpClient
-</details>
-🏗️ System Architecture
-<details> <summary>Click to expand architecture diagram</summary>
-ProductLoader
-     ↓
-ProductDataSource (HTTP / Mock / File)
-     ↓
-ProductParser
-     ↓
-ProductRepository (Immutable)
-     ↓
-ProductService
-     ↓
-PriceServiceImpl
-     ↓
-ShoppingCartProcessor
-     ↓
-DefaultTaxService
-     ↓
-Bill Generator
-</details>
+Clean Architecture
+SOLID principles
+Virtual Threads
+Extensible service-based design
+🏗️ Architecture
+<pre> ProductLoader ↓ ProductDataSource ↓ ProductParser ↓ ProductRepository ↓ ProductService ↓ PriceServiceImpl ↓ ShoppingCartProcessor ↓ DefaultTaxService ↓ Bill Generator </pre>
 🔌 Core Components
 📦 ProductDataSource
-<details> <summary>Abstraction Layer</summary>
-public interface ProductDataSource {
-    String fetch(String endpoint);
-}
 
-✔ Decouples data source
-✔ Supports HTTP / File / Mock
-✔ Follows DIP principle
+Abstracts data fetching (HTTP / File / Mock).
 
-</details>
-🌐 HTTP Data Source
-<details> <summary>Modern HttpClient implementation</summary>
+🌐 HttpProductDataSource
 
-✔ Uses Java 21 HttpClient
-✔ Builder-based request creation
-✔ Fully testable
+Uses Java HttpClient (no deprecated APIs).
 
-</details>
-📦 Product Repository
-<details> <summary>Immutable storage layer</summary>
+📦 ProductRepository
 
-✔ Immutable Map storage
-✔ Case-insensitive lookup
-✔ Factory method (of)
+Immutable in-memory storage with fast lookup.
 
-</details>
-🧠 Product Service
-<details> <summary>Domain access layer</summary>
+🧠 ProductService
 
-✔ Wraps repository
-✔ Central product lookup point
-✔ Hides storage complexity
+Domain layer over repository.
 
-</details>
-💰 Price Service
-<details> <summary>Adapter layer for pricing</summary>
-public class PriceServiceImpl implements PriceService {
+💰 PriceServiceImpl
 
-    private final ProductService productService;
+Adapter between ProductService and pricing logic.
 
-    public PriceServiceImpl(ProductService productService) {
-        this.productService = productService;
-    }
+🧾 DefaultTaxService
 
-    @Override
-    public double getPrice(String productName) {
-        return productService
-                .getProduct(productName)
-                .getPrice();
-    }
-}
+Strategy-based tax calculation.
 
-✔ Decouples pricing from cart
-✔ Adapter pattern
-✔ DIP-compliant
+🛒 ShoppingCartProcessor
 
-</details>
-🧾 Tax Service
-<details> <summary>Strategy implementation</summary>
-public class DefaultTaxService implements TaxService {
+Core engine for cart + billing logic.
 
-    private static final double TAX_RATE = 0.125;
-
-    @Override
-    public double calculate(double subtotal) {
-        return subtotal * TAX_RATE;
-    }
-}
-
-✔ Strategy pattern
-✔ Easily replaceable tax rules
-
-</details>
-🛒 Shopping Cart Engine
-<details> <summary>Core cart logic</summary>
-
-✔ Add items with quantity
-✔ Auto aggregation
-✔ Subtotal calculation
-✔ Tax + total calculation
-✔ LineItem-based bill generation
-
-</details>
-💰 Sample Output
-Cheerios x 2 = 16.86
-Cornflakes x 1 = 5.50
---------------------------------
-Subtotal: 22.36
-Tax (12.5%): 2.79
-Total: 25.15
-⚡ Java 21 Features
-<details> <summary>Click to expand</summary>
-🧵 Virtual Threads (parallel product loading)
-🌐 HttpClient API (modern HTTP calls)
-📦 Immutable collections
-⚙ Functional streams
-🧠 Builder pattern usage
-</details>
-🧩 Design Principles
-<details> <summary>SOLID Principles</summary>
-
-✔ SRP → Each class has single responsibility
-✔ DIP → Uses interfaces for dependencies
-✔ OCP → Extensible tax/pricing logic
-✔ ISP → Clean service separation
-
-</details>
 📂 Project Structure
-<details> <summary>Click to expand structure</summary>
 com.at.shopping.cart
 │
 ├── core
-│   └── ShoppingCartProcessor
+│   └── ShoppingCartProcessor.java
 │
 ├── datasource
-│   ├── ProductDataSource
-│   └── HttpProductDataSource
+│   ├── ProductDataSource.java
+│   └── HttpProductDataSource.java
 │
 ├── parser
-│   └── ProductParser
+│   └── ProductParser.java
 │
 ├── product
-│   ├── ProductLoader
-│   ├── ProductRepository
-│   └── ProductService
+│   ├── ProductLoader.java
+│   ├── ProductRepository.java
+│   └── ProductService.java
 │
 ├── service
-│   ├── PriceService
-│   ├── PriceServiceImpl
-│   ├── TaxService
-│   └── DefaultTaxService
+│   ├── PriceService.java
+│   ├── PriceServiceImpl.java
+│   ├── TaxService.java
+│   └── DefaultTaxService.java
 │
-└── model
-    ├── Product
-    ├── CartItem
-    └── LineItem
-</details>
+├── model
+│   ├── Product.java
+│   ├── CartItem.java
+│   └── LineItem.java
+│
+└── util
+    └── RetryExecutor.java
 🚀 How to Run
 mvn clean install
 java -cp target/app.jar com.at.shopping.cart.Main
 🧪 Testing
-<details> <summary>Testing stack</summary>
 JUnit 5
 Mockito
-
-✔ Service layer tests
-✔ Repository tests
-✔ Cart calculation tests
-✔ HTTP datasource mocking
-
-</details>
+Mocked HTTP layer
+Service-level unit tests
 🔥 Key Highlights
-🧠 Clean Architecture design
-⚡ Virtual-thread parallel loading
+⚡ Virtual Threads for parallel loading
+🧠 Clean layered architecture
+🔌 Fully decoupled services
 🧾 Structured billing system
-🧩 Fully testable service layer
-🔌 Highly extensible design
-🌐 Modern HTTP integration
+🧪 Highly testable design
 📈 Future Enhancements
-💸 Discount/Coupon engine
-🧠 Redis caching layer
+💸 Discount engine
 🌐 Spring Boot REST API
-🗄 Database persistence (JPA)
+🧠 Redis caching layer
+🗄 Database persistence
 ⚡ Async structured concurrency
-👨‍💻 Summary
 
-This project demonstrates:
 
 ✔ Production-level Java design
 ✔ Strong SOLID principles
