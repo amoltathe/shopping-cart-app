@@ -121,9 +121,29 @@ Service-level unit tests
 🗄 Database persistence
 ⚡ Async structured concurrency
 </pre>
+# Project Details
+<pre>
+“This project is a Java 21-based Shopping Cart system designed using Clean Architecture and SOLID principles.
+
+At the top, I have a ProductLoader which loads product data from remote JSON sources using a ProductDataSource abstraction. This allows me to switch between HTTP, file, or mock implementations without changing core logic.
+
+The raw JSON is parsed using ProductParser and stored in an immutable ProductRepository, ensuring thread safety and consistency.
+
+On top of that, ProductService acts as a domain layer, and PriceServiceImpl adapts product data into pricing logic. This separation ensures pricing logic is decoupled from product storage.
+
+The ShoppingCartProcessor is the core engine. It handles cart state, quantity aggregation, subtotal calculation, and delegates pricing and tax logic to dedicated services.
+
+Tax calculation is handled using DefaultTaxService, which follows a strategy pattern so tax rules can be changed without modifying cart logic.
+
+Finally, I generate a LineItem-based bill breakdown, separating business logic from presentation.
+
+From a Java perspective, I also used modern features like HttpClient, Virtual Threads for parallel product loading, and immutable collections for safety.
+
+Overall, the system is designed to be scalable, testable, and production-ready with clear separation of concerns.”
 
 ✔ Production-level Java design
 ✔ Strong SOLID principles
 ✔ Clean separation of concerns
+</pre>
 ✔ Scalable system architecture
 ✔ Modern Java 21 usage
