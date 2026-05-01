@@ -97,6 +97,41 @@ com.at.shopping.cart
 mvn clean install
 java -cp target/app.jar com.at.shopping.cart.Main
 
+# Sample Output
+<pre>
+🛒 WELCOME TO SHOPPING CART
+==============================
+
+Available Products:
+- frosties
+- weetabix
+- cornflakes
+- shreddies
+- cheerios
+
+Enter product name (or done): frosties
+Enter quantity (or done/exit): 2
+✅ Added: frosties x 2
+
+Enter product name (or done): done
+
+🛒 CART DETAILS
+==============================
+frosties x 2
+
+ BILL SUMMARY
+================================
+
+frosties     4.99 × 2 = 9.98
+
+--------------------------------
+Subtotal:       9.98
+Tax (12.5%):    1.25
+--------------------------------
+Total:          11.23
+================================
+</pre>
+
 # Testing
 <pre>
 
