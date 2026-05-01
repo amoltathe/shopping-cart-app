@@ -1,6 +1,7 @@
 package com.at.shopping.cart;
 
 import com.at.shopping.cart.core.ShoppingCartProcessor;
+import com.at.shopping.cart.datasource.HttpProductDataSource;
 import com.at.shopping.cart.service.DefaultTaxService;
 import com.at.shopping.cart.service.PriceService;
 import com.at.shopping.cart.service.PriceServiceImpl;
@@ -15,9 +16,8 @@ import java.util.Scanner;
 public class Main {
 
     static void main() throws IOException {
-
         // Bootstrap system
-        ProductService productService = ProductLoader.init();
+        ProductService productService = ProductLoader.init(HttpProductDataSource.builder().build());
         PriceService priceService = new PriceServiceImpl(productService);
         TaxService taxService = new DefaultTaxService();
         ShoppingCartProcessor cart = new ShoppingCartProcessor(priceService, taxService);

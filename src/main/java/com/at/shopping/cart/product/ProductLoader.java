@@ -1,5 +1,4 @@
 package com.at.shopping.cart.product;
-import com.at.shopping.cart.datasource.HttpProductDataSource;
 import com.at.shopping.cart.datasource.ProductDataSource;
 import com.at.shopping.cart.parser.ProductParser;
 import java.io.IOException;
@@ -46,11 +45,8 @@ public final class ProductLoader {
      * - Uses retry utility for resilience
      * - Builds immutable repository as final output
      */
-    public static ProductService init() throws IOException {
+    public static ProductService init( ProductDataSource dataSource) throws IOException {
 
-        ProductDataSource dataSource = HttpProductDataSource
-                .builder()
-                .build();
         ProductParser parser = new ProductParser();
 
         List<Product> allProducts = new ArrayList<>();

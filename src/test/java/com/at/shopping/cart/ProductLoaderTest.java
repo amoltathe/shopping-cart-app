@@ -1,91 +1,106 @@
 package com.at.shopping.cart;
 
-
 import com.at.shopping.cart.datasource.ProductDataSource;
 import com.at.shopping.cart.model.Product;
-import com.at.shopping.cart.parser.ProductParser;
+import com.at.shopping.cart.product.ProductLoader;
+import com.at.shopping.cart.product.ProductService;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class ProductLoaderTest {
 
-    @Test
-    void shouldLoadProductsSuccessfully() throws Exception {
+    /**
+     * Fake DataSource that bypasses HTTP but keeps architecture intact
+     */
+    static class FakeProductDataSource implements ProductDataSource {
 
-        // =========================
-        // MOCK DEPENDENCIES
-        // =========================
-        ProductDataSource dataSource = mock(ProductDataSource.class);
-        ProductParser parser = mock(ProductParser.class);
+        @Override
+        public String fetch(String endpoint) {
 
-        String json = """
+            if (endpoint.contains("cheerios")) {
+                return """
                 {
                   "title": "Cheerios",
-                  "price": 8.43
+                  "price": 4.68
                 }
                 """;
+            }
 
-        Product product = new Product("cheerios", "Cheerios", 8.43);
+            if (endpoint.contains("cornflakes")) {
+                return """
+                {
+                  "title": "Cornflakes",
+                  "price": 2.52
+                }
+                """;
+            }
 
-        // Mock behavior
-        when(dataSource.fetch(anyString())).thenReturn(json);
-        when(parser.parse(json)).thenReturn(List.of(product));
-
-        // =========================
-        // MANUAL SIMULATION OF LOADER LOGIC
-        // (We test orchestration behavior, not static init directly)
-        // =========================
-
-        List<Product> result = parser.parse(json);
-
-        // =========================
-        // ASSERTIONS
-        // =========================
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals("cheerios", result.getFirst().getName());
+            return """
+            {
+              "title": "Unknown",
+              "price": 1.00
+            }
+            """;
+        }
     }
 
+    /**
+     * Helper method to create service with fake dependency
+     */
+    private ProductService createService() throws IOException {
+        return ProductLoader.init(new FakeProductDataSource());
+    }
+
+    /**
+     * TEST: Full product loading flow
+     */
     @Test
-    void shouldHandleParserFailure() {
+    void shouldLoadProductsSuccessfully() throws IOException {
 
-        ProductDataSource dataSource = mock(ProductDataSource.class);
-        ProductParser parser = mock(ProductParser.class);
+        ProductService service = createService();
 
-        when(dataSource.fetch(anyString())).thenReturn("invalid-json");
-        when(parser.parse("invalid-json"))
-                .thenThrow(new RuntimeException("parse error"));
+        List<Product> products = service.getAllProducts();
 
-        RuntimeException ex = assertThrows(
-                RuntimeException.class,
-                () -> parser.parse("invalid-json")
+        assertNotNull(products);
+        assertFalse(products.isEmpty());
+
+        assertTrue(
+                products.stream()
+                        .anyMatch(p -> p.getTitle().equals("Cheerios"))
         );
-
-        assertTrue(ex.getMessage().contains("parse error"));
     }
 
+    /**
+     * TEST: Validate product correctness
+     */
     @Test
-    void shouldReturnMultipleProductsFromDifferentFiles() {
+    void shouldMatchProductValues() throws IOException {
 
-        ProductDataSource dataSource = mock(ProductDataSource.class);
-        ProductParser parser = mock(ProductParser.class);
+        ProductService service = createService();
 
-        Product p1 = new Product("cheerios", "Cheerios", 8.43);
-        Product p2 = new Product("cornflakes", "Cornflakes", 5.99);
+        Product cheerios = service.getAllProducts()
+                .stream()
+                .filter(p -> p.getTitle().equals("Cheerios"))
+                .findFirst()
+                .orElse(null);
 
-        when(parser.parse(anyString()))
-                .thenReturn(List.of(p1))
-                .thenReturn(List.of(p2));
+        assertNotNull(cheerios);
+        assertEquals(4.68, cheerios.getPrice());
+    }
 
-        List<Product> all = List.of(
-                parser.parse("file1"),
-                parser.parse("file2")
-        ).stream().flatMap(List::stream).toList();
+    /**
+     * TEST: Ensure system handles unknown product safely
+     */
+    @Test
+    void shouldHandleUnknownProduct() throws IOException {
 
-        assertEquals(2, all.size());
+        ProductService service = createService();
+
+        assertNotNull(service.getAllProducts());
+        assertFalse(service.getAllProducts().isEmpty());
     }
 }
