@@ -54,7 +54,7 @@ Strategy-based tax calculation.
 🛒 ShoppingCartProcessor
 
 Core engine for cart + billing logic.
-
+<pre>
 com.at.shopping.cart
 │
 ├── core
@@ -85,7 +85,7 @@ com.at.shopping.cart
 │
 └── util
     └── RetryExecutor.java
-    
+</pre> 
 🚀 How to Run
 mvn clean install
 java -cp target/app.jar com.at.shopping.cart.Main
