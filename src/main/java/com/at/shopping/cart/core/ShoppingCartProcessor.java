@@ -138,7 +138,7 @@ public class ShoppingCartProcessor {
     public void printBillSummary() {
 
 
-        System.out.println("\n💰 BILL SUMMARY");
+        System.out.println("\n BILL SUMMARY");
         System.out.println("================================\n");
 
         for (LineItem line : getBillLines()) {

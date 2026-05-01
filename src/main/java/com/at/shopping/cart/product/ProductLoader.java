@@ -91,6 +91,8 @@ public final class ProductLoader {
 
         String url = BASE_URL + file;
 
+        //MAX_RETRIES	how many times to try
+        //BACKOFF_MS	delay between retries
         return RetryExecutor.execute(MAX_RETRIES, BACKOFF_MS, () -> {
             String json = dataSource.fetch(url); // doWork
             return parser.parse(json);
