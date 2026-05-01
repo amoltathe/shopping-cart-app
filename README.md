@@ -55,7 +55,6 @@ Strategy-based tax calculation.
 
 Core engine for cart + billing logic.
 
-📂 Project Structure
 com.at.shopping.cart
 │
 ├── core
@@ -86,6 +85,7 @@ com.at.shopping.cart
 │
 └── util
     └── RetryExecutor.java
+    
 🚀 How to Run
 mvn clean install
 java -cp target/app.jar com.at.shopping.cart.Main
