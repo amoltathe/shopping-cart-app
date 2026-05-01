@@ -8,12 +8,17 @@ import java.net.http.HttpResponse;
 public class HttpProductDataSource implements ProductDataSource {
 
     private HttpClient client;
+
+    // 🔥 Prevent direct instantiation (forces builder usage)
+    private HttpProductDataSource() {}
+
     /**
      * BUILDER ENTRY POINT
      */
     public static Builder builder() {
         return new Builder();
     }
+
     /**
      * RESPONSIBILITY:
      * Fetch product JSON using modern HTTP Client (JDK 11+ standard, preferred in JDK 21)
@@ -25,10 +30,7 @@ public class HttpProductDataSource implements ProductDataSource {
     @Override
     public String fetch(String endpoint) {
         try {
-            var request = HttpRequest.newBuilder()
-                    .uri(URI.create(endpoint))
-                    .GET()
-                    .build();
+            var request = buildRequest(endpoint);
 
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
 

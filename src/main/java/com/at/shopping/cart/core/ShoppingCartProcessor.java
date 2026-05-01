@@ -137,63 +137,29 @@ public class ShoppingCartProcessor {
      */
     public void printBillSummary() {
 
-        System.out.println("\n💰 BILL SUMMARY");
-        System.out.println("================================");
-
-        List<LineItem> lines = getBillLines();
-
-        double subtotal = 0.0;
-        StringBuilder subtotalExpression = new StringBuilder();
-
-        for (int i = 0; i < lines.size(); i++) {
-
-            LineItem line = lines.get(i);
-
-            System.out.print(line.format());
-
-            // build subtotal breakdown (unitPrice × quantity expanded)
-            for (int q = 0; q < line.quantity(); q++) {
-
-                subtotal += line.unitPrice();
-
-                subtotalExpression.append(String.format("%.2f", line.unitPrice()));
-
-                if (i != lines.size() - 1 || q != line.quantity() - 1) {
-                    subtotalExpression.append(" + ");
-                }
-            }
-        }
-
-        double tax = getTax();
-        double total = getTotal();
-
-        System.out.println("================================");
-
-        System.out.printf("Subtotal: %s = %.2f%n",
-                subtotalExpression,
-                subtotal
-        );
-
-        System.out.printf("Tax (12.5%%): %.2f%n", tax);
-        System.out.printf("Total: %.2f%n", total);
-    }
-    public void printBillSummary1() {
 
         System.out.println("\n💰 BILL SUMMARY");
-        System.out.println("================================");
+        System.out.println("================================\n");
 
         for (LineItem line : getBillLines()) {
-            System.out.println(line.format());
+            System.out.printf("%-12s %.2f × %d = %.2f%n",
+                    line.name(),
+                    line.unitPrice(),
+                    line.quantity(),
+                    line.lineTotal()
+            );
         }
 
         double subtotal = getSubtotal();
         double tax = getTax();
         double total = getTotal();
 
+        System.out.println("\n--------------------------------");
+        System.out.printf("%-15s %.2f%n", "Subtotal:", subtotal);
+        System.out.printf("%-15s %.2f%n", "Tax (12.5%):", tax);
         System.out.println("--------------------------------");
-        System.out.printf("Subtotal: %.2f%n", subtotal);
-        System.out.printf("Tax (12.5%%): %.2f%n", tax);
-        System.out.printf("Total: %.2f%n", total);
+        System.out.printf("%-15s %.2f%n", "Total:", total);
+        System.out.println("================================");
     }
 
     /**
@@ -203,20 +169,3 @@ public class ShoppingCartProcessor {
         return Math.round(value * 100.0) / 100.0;
     }
 }
-/*
-How to explain this in interview
-
-You can confidently say:
-
-✔ Architecture
-
-“Cart is responsible only for aggregation and coordination. Pricing and tax are delegated to separate services.”
-
-✔ SOLID principles
-SRP → Cart, PriceService, TaxService separated
-DIP → depends on interfaces
-OCP → tax rules can change without modifying cart
-✔ Design improvement
-
-“I separated calculation (business logic) from presentation (printing) using LineItem DTO.”
- */

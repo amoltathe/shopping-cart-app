@@ -48,7 +48,9 @@ public final class ProductLoader {
      */
     public static ProductService init() throws IOException {
 
-        ProductDataSource dataSource = new HttpProductDataSource();
+        ProductDataSource dataSource = HttpProductDataSource
+                .builder()
+                .build();
         ProductParser parser = new ProductParser();
 
         List<Product> allProducts = new ArrayList<>();
