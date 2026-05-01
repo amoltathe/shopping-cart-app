@@ -89,24 +89,28 @@ com.at.shopping.cart
 🚀 How to Run
 mvn clean install
 java -cp target/app.jar com.at.shopping.cart.Main
+<pre>
 🧪 Testing
 JUnit 5
 Mockito
 Mocked HTTP layer
 Service-level unit tests
+
 🔥 Key Highlights
 ⚡ Virtual Threads for parallel loading
 🧠 Clean layered architecture
 🔌 Fully decoupled services
 🧾 Structured billing system
 🧪 Highly testable design
+</pre>
+<pre>
 📈 Future Enhancements
 💸 Discount engine
 🌐 Spring Boot REST API
 🧠 Redis caching layer
 🗄 Database persistence
 ⚡ Async structured concurrency
-
+</pre>
 
 ✔ Production-level Java design
 ✔ Strong SOLID principles
