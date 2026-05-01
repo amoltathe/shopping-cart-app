@@ -123,7 +123,7 @@ Service-level unit tests
 </pre>
 # Project Details
 <pre>
-“This project is a Java 21-based Shopping Cart system designed using Clean Architecture and SOLID principles.
+This project is a Java 21-based Shopping Cart system designed using Clean Architecture and SOLID principles.
 
 At the top, I have a ProductLoader which loads product data from remote JSON sources using a ProductDataSource abstraction. This allows me to switch between HTTP, file, or mock implementations without changing core logic.
 
@@ -139,11 +139,12 @@ Finally, I generate a LineItem-based bill breakdown, separating business logic f
 
 From a Java perspective, I also used modern features like HttpClient, Virtual Threads for parallel product loading, and immutable collections for safety.
 
-Overall, the system is designed to be scalable, testable, and production-ready with clear separation of concerns.”
+Overall, the system is designed to be scalable, testable, and production-ready with clear separation of concerns.
 
 ✔ Production-level Java design
 ✔ Strong SOLID principles
 ✔ Clean separation of concerns
-</pre>
 ✔ Scalable system architecture
 ✔ Modern Java 21 usage
+</pre>
+
