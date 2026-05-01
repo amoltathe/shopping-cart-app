@@ -1,10 +1,12 @@
 # shopping-cart-app
 A modular, production-style Shopping Cart system built in Java 21, demonstrating Clean Architecture, SOLID principles, and modern concurrency (Virtual Threads).
+
+<pre>
 ✔ Clean Architecture
 ✔ SOLID principles
 ✔ Modern concurrency (Virtual Threads)
 ✔ Testable design with dependency injection
-
+</pre>
 # Navigation
 <pre>
 1. Overview
